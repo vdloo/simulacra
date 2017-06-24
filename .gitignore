@@ -9,3 +9,6 @@ tools
 lib
 activate_venv
 runtests.sh
+
+# PyCharm
+.idea

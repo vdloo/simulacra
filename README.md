@@ -1,7 +1,7 @@
 simulacra
 =========
 
-My personal decentralized grid computing cluster
+My personal decentralized grid computing network
 
 This repository contains the declarative blueprints for my self-organising 
 network of heterogeneous machines and the tasks they perform. The network 

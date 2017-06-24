@@ -20,7 +20,7 @@ machines like mobile devices. This project builds on top of those tools.
 If a machine is online and can be reached by any of the other machines in 
 the network, the resources should be available to the cluster. If not enough 
 resources are available for the tasks in the cluster, more machines should be 
-made available (autoscaling), either through` `Wake-on-LAN` of known hardware 
+made available (autoscaling), either through `Wake-on-LAN` of known hardware 
 or by booting cloud servers. Conversely, when there is not enough work to 
 justify the amount of running machines, the grid should shut down superfluous 
 machines to save electricity.

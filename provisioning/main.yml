@@ -33,11 +33,8 @@
       update=yes
     register: simulacra_git
 
-  - name: Make setup.sh executable
-    file: dest=/usr/etc/simulacra/setup.sh mode=0755
-
-  - name: Download jobrunner dependencies
-    command: /usr/etc/simulacra/setup.sh
+  - name: Install jobrunner systemwide
+    command: make install
     args:
       chdir: /usr/etc/simulacra/
 

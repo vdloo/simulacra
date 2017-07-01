@@ -11,6 +11,7 @@
     - python3-pip
     - python3-venv
     - python-virtualenv
+    - make
     when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
   - name: Ensure Archlinux dependencies are installed
@@ -20,6 +21,7 @@
     - python
     - python-virtualenv
     - python-sphinx
+    - make
     when: ansible_distribution == 'Archlinux'
 
   - name: Install the simulacra repository
@@ -42,25 +44,25 @@
   - name: Install simulacra requirements in the virtualenv on Ubuntu
     pip:
       requirements=/usr/etc/simulacra/requirements/base.txt
-      virtualenv=/usr/etc/simulacra/venv
+      virtualenv=/usr/etc/simulacra/.venv
       virtualenv_command=pyvenv-3.5
     when: ansible_distribution == 'Ubuntu'
 
   - name: Manually create python 3.4 venv on Debian
-    command: virtualenv-3.4 -p python3.4 /usr/etc/simulacra/venv
+    command: virtualenv-3.4 -p python3.4 /usr/etc/simulacra/.venv
     when: ansible_distribution == 'Debian'
 
   - name: Install simulacra requirements in the virtualenv on Debian
     pip:
       requirements=/usr/etc/simulacra/requirements/base.txt
-      virtualenv=/usr/etc/simulacra/venv
+      virtualenv=/usr/etc/simulacra/.venv
       virtualenv_command=virtualenv-3.4
     when: ansible_distribution == 'Debian'
 
   - name: Install simulacra requirements in the virtualenv
     pip:
       requirements=/usr/etc/simulacra/requirements/base.txt
-      virtualenv=/usr/etc/simulacra/venv
+      virtualenv=/usr/etc/simulacra/.venv
       virtualenv_python=python3
     when: ansible_distribution == 'Archlinux'
 
@@ -95,7 +97,7 @@
       screen -ls | grep -v Dead | grep -q simulacra ||
       screen -S simulacra -d -m
       bash -c 'PYTHONPATH=/usr/etc/simulacra/ 
-      /usr/etc/simulacra/venv/bin/python 
+      /usr/etc/simulacra/.venv/bin/python 
       /usr/etc/simulacra/bin/jobrunner_run.py'
 
   - name: Wipe dead screens

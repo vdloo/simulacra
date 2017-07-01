@@ -35,14 +35,29 @@
       requirements=/usr/etc/simulacra/requirements/base.txt
       virtualenv=/usr/etc/simulacra/venv
       virtualenv_command=pyvenv-3.5
-    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+    when: ansible_distribution == 'Ubuntu'
+
+  - name: Install simulacra requirements in the virtualenv on Debian
+    pip:
+      requirements=/usr/etc/simulacra/requirements/base.txt
+      virtualenv=/usr/etc/simulacra/venv
+      virtualenv_command=virtualenv
+    when: ansible_distribution == 'Debian'
 
   - name: Install simulacra requirements in the virtualenv
     pip:
       requirements=/usr/etc/simulacra/requirements/base.txt
       virtualenv=/usr/etc/simulacra/venv
       virtualenv_python=python3
-    when: ansible_distribution != 'Debian' and ansible_distribution != 'Ubuntu'
+    when: ansible_distribution == 'Archlinux'
+
+  - name: Make setup.sh executable
+    file: dest=/usr/etc/simulacra/setup.sh mode=u+x
+
+  - name: Download jobrunner dependencies
+    command: setup.sh
+    args:
+      chdir: /usr/etc/simulacra/
 
   - name: Ensure consul config directory exists
     file: path=/etc/consul.d state=directory

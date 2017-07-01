@@ -23,7 +23,8 @@
     when: ansible_distribution == 'Archlinux'
 
   - name: Install the simulacra repository
-    git: repo=https://github.com/vdloo/simulacra.git
+    git: 
+      repo=https://github.com/vdloo/simulacra.git
       dest=/usr/etc/simulacra
       version=master
       force=yes
@@ -89,7 +90,7 @@
       kill {}" || /bin/true
 
   # todo: refactor this to a supervisord script, not all hosts have an init system
-  - name: Ensure the detached webservice is running
+  - name: Ensure the detached conductor is running
     shell: >
       screen -ls | grep -v Dead | grep -q simulacra ||
       screen -S simulacra -d -m

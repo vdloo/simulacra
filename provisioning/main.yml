@@ -49,15 +49,15 @@
     stat: path=/usr/etc/simulacra/.venv
     register: manual_venv
 
-  - name: Manually create python 3.4 venv on Debian
-    command: virtualenv-3.4 -p python3.4 /usr/etc/simulacra/.venv
+  - name: Manually create python 3 venv on Debian
+    command: virtualenv -p python3 /usr/etc/simulacra/.venv
     when: ansible_distribution == 'Debian' and not manual_venv.stat.exists
 
   - name: Install simulacra requirements in the virtualenv on Debian
     pip:
       requirements=/usr/etc/simulacra/requirements/base.txt
       virtualenv=/usr/etc/simulacra/.venv
-      virtualenv_command=virtualenv-3.4
+      virtualenv_command=virtualenv
     when: ansible_distribution == 'Debian'
 
   - name: Install simulacra requirements in the virtualenv

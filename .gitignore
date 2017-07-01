@@ -12,3 +12,4 @@ runtests.sh
 
 # PyCharm
 .idea
+.venv

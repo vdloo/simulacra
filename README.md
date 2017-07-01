@@ -65,10 +65,14 @@ git clone https://github.com/vdloo/simulacra
 cd simulacra
 ```
 
-Download the jobrunner subproject
+Create the venv and install the dependencies
 ```
-chmod u+x setup.sh
-./setup.sh
+. activate_venv
+```
+
+Install system-wide
+```
+make install
 ```
 
 And then create the virtualenv and install the dependencies as described [here](https://github.com/vdloo/jobrunner#usage).

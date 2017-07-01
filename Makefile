@@ -10,6 +10,13 @@ test:
 install:
 	chmod u+x setup.sh
 	./setup.sh
+	sudo mkdir -p /usr/share/simulacra
+	sudo cp -R . /usr/share/simulacra
+	sudo ln -sf /usr/share/simulacra/bin/jobrunner /usr/bin/jobrunner
+	sudo chmod u+x /usr/bin/jobrunner
+uninstall:
+	sudo rm -rf /usr/share/simulacra
+	sudo rm -f /usr/bin/jobrunner
 clean:
 	git clean -xfd
 

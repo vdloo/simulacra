@@ -1,0 +1,11 @@
+{
+  "service": 
+  {
+    "name": "jobrunner",
+    "port": 3000,
+    "check":  {
+      "script": "ps ax  | grep -q [j]obrunner_run.py",
+      "interval": "10s"
+    }
+  }
+}

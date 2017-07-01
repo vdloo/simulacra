@@ -45,6 +45,10 @@
       virtualenv_command=pyvenv-3.5
     when: ansible_distribution == 'Ubuntu'
 
+  - name: Manually create python 3.4 venv on Debian
+    command: virtualenv-3.4 -p python3.4 /usr/etc/simulacra/venv
+    when: ansible_distribution == 'Debian'
+
   - name: Install simulacra requirements in the virtualenv on Debian
     pip:
       requirements=/usr/etc/simulacra/requirements/base.txt

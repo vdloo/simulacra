@@ -8,8 +8,6 @@ DESCRIPTION := My personal decentralized grid computing cluster
 test:
 	./runtests.sh -1
 install:
-	chmod u+x setup.sh
-	./setup.sh
 	sudo mkdir -p /usr/share/simulacra
 	sudo cp -R . /usr/share/simulacra
 	sudo ln -sf /usr/share/simulacra/bin/jobrunner /usr/bin/jobrunner

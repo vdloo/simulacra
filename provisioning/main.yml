@@ -33,8 +33,11 @@
       update=yes
     register: simulacra_git
 
-  - name: Install jobrunner systemwide
-    command: make install
+  - name: Make setup.sh executable
+    file: dest=/usr/etc/simulacra/setup.sh mode=0755
+
+  - name: Download jobrunner dependencies
+    command: /usr/etc/simulacra/setup.sh
     args:
       chdir: /usr/etc/simulacra/
 
@@ -66,6 +69,11 @@
       virtualenv=/usr/etc/simulacra/.venv
       virtualenv_python=python3
     when: ansible_distribution == 'Archlinux'
+
+  - name: Install jobrunner systemwide
+    command: make install
+    args:
+      chdir: /usr/etc/simulacra/
 
   - name: Ensure consul config directory exists
     file: path=/etc/consul.d state=directory

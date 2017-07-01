@@ -1,0 +1,11 @@
+{
+  "raptiformica_api_version": "0.1",
+  "server": {
+    "headless": {
+      "simulacra": {
+        "source": "https://github.com/vdloo/simulacra",
+        "bootstrap": "./deploy.sh"
+      }
+    }
+  }
+}

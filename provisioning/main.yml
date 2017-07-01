@@ -1,0 +1,83 @@
+---
+- hosts: all
+  vars:
+    ansible_python_interpreter: "/usr/bin/env python2"
+  tasks:
+  - name: Ensure Debian-like OS dependencies are installed
+    apt: name={{ item }} state=latest
+    with_items:
+    - python3
+    - python3-dev
+    - python3-pip
+    - python3-venv
+    - python-virtualenv
+    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+  - name: Ensure Archlinux dependencies are installed
+    pacman: name={{ item }} state=latest
+    with_items:
+    - python-pip
+    - python
+    - python-virtualenv
+    - python-sphinx
+    when: ansible_distribution == 'Archlinux'
+
+  - name: Install the simulacra repository
+    git: repo=https://github.com/vdloo/simulacra.git
+      dest=/usr/etc/simulacra
+      version=master
+      force=yes
+      update=yes
+    register: simulacra_git
+
+  - name: Install simulacra requirements in the virtualenv on Ubuntu
+    pip:
+      requirements=/usr/etc/simulacra/requirements/base.txt
+      virtualenv=/usr/etc/simulacra/venv
+      virtualenv_command=pyvenv-3.5
+    when: ansible_distribution == 'Ubuntu'
+
+  - name: Install simulacra requirements in the virtualenv
+    pip:
+      requirements=/usr/etc/simulacra/requirements/base.txt
+      virtualenv=/usr/etc/simulacra/venv
+      virtualenv_python=python3
+    when: ansible_distribution != 'Ubuntu'
+
+  - name: Ensure consul config directory exists
+    file: path=/etc/consul.d state=directory
+
+  - name: Ensure consul service file for the conductor
+    template:
+      src=templates/consul_service_configuration.json
+      dest=/etc/consul.d/simulacra.json
+    register: consul_service_registered
+
+  - name: Reload consul agent if it is running
+    shell: >
+      pkill --signal SIGHUP
+      -f '^/usr/bin/consul agent
+      -config-dir /etc/consul.d/' ||
+      /bin/true
+    when: consul_service_registered.changed
+
+  - name: Kill the service if it is running an old release
+    # - brackets so pkill does not terminate its own process.
+    # - grep out any matching processes running in dockers
+    shell: >
+      ps aux | grep [j]obrunner_run.py | awk '{print $2}' |
+      xargs --no-run-if-empty -I {} sh -c "grep -q docker /proc/{}/cgroup ||
+      kill {}" || /bin/true
+
+  # todo: refactor this to a supervisord script, not all hosts have an init system
+  - name: Ensure the detached webservice is running
+    shell: >
+      screen -ls | grep -v Dead | grep -q simulacra ||
+      screen -S simulacra -d -m
+      bash -c 'PYTHONPATH=/usr/etc/simulacra/ 
+      /usr/etc/simulacra/venv/bin/python 
+      /usr/etc/simulacra/bin/jobrunner_run.py'
+
+  - name: Wipe dead screens
+    shell: screen -wipe || /bin/true
+

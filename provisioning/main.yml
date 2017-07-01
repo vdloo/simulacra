@@ -30,6 +30,14 @@
       update=yes
     register: simulacra_git
 
+  - name: Make setup.sh executable
+    file: dest=/usr/etc/simulacra/setup.sh mode=0755
+
+  - name: Download jobrunner dependencies
+    command: /usr/etc/simulacra/setup.sh
+    args:
+      chdir: /usr/etc/simulacra/
+
   - name: Install simulacra requirements in the virtualenv on Ubuntu
     pip:
       requirements=/usr/etc/simulacra/requirements/base.txt
@@ -50,14 +58,6 @@
       virtualenv=/usr/etc/simulacra/venv
       virtualenv_python=python3
     when: ansible_distribution == 'Archlinux'
-
-  - name: Make setup.sh executable
-    file: dest=/usr/etc/simulacra/setup.sh mode=u+x
-
-  - name: Download jobrunner dependencies
-    command: setup.sh
-    args:
-      chdir: /usr/etc/simulacra/
 
   - name: Ensure consul config directory exists
     file: path=/etc/consul.d state=directory

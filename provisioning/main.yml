@@ -78,7 +78,7 @@
 
   - name: Ensure consul service file for the conductor
     file:
-      src=templates/consul_service_configuration.json
+      src=files/consul_service_configuration.json
       dest=/etc/consul.d/simulacra.json
     register: consul_service_registered
 

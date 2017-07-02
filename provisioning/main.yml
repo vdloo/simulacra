@@ -77,7 +77,7 @@
     file: path=/etc/consul.d state=directory
 
   - name: Ensure consul service file for the conductor
-    file:
+    copy:
       src=files/jobrunner.json
       dest=/etc/consul.d/jobrunner.json
     register: consul_service_registered

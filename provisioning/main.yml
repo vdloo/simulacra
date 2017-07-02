@@ -79,7 +79,7 @@
   - name: Ensure consul service file for the conductor
     file:
       src=files/consul_service_configuration.json
-      dest=/etc/consul.d/simulacra.json
+      dest=/etc/consul.d/jobrunner.json
     register: consul_service_registered
 
   - name: Reload consul agent if it is running

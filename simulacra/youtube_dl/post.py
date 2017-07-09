@@ -13,6 +13,5 @@ def download_videos(channels_file):
 
     post_job(
         youtube_dl_flow_factory,
-        factory_args=[channels],
-        store={'channels': channels}
+        factory_args=[channels]
     )

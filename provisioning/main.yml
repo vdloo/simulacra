@@ -10,6 +10,7 @@
     - python3-venv
     - python-virtualenv
     - make
+    - libmysqlclient-dev
     when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
   - name: Ensure Archlinux dependencies are installed

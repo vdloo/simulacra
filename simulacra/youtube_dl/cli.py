@@ -1,5 +1,4 @@
-from argparse import ArgumentParser
-
+from flows.builtin.helpers.parser import flow_parser
 from flows.simulacra.youtube_dl.post import download_videos
 from jobrunner.cli.parse import parse_arguments
 from jobrunner.plugins import register_job
@@ -14,7 +13,7 @@ def parse_youtube_dl_arguments(args=None):
     Will use argv if none specified.
     :return obj args: parsed arguments
     """
-    parser = ArgumentParser(
+    parser = flow_parser(
         prog="jobrunner post youtube_dl",
         description='Post a job that downloads videos from YouTube'
     )
@@ -36,4 +35,4 @@ def youtube_dl_latest(args=None):
     :return None:
     """
     args = parse_youtube_dl_arguments(args=args)
-    download_videos(channels_file=args.channels_file)
+    download_videos(channels_file=args.channels_file, hierarchy=args.hierarchy)

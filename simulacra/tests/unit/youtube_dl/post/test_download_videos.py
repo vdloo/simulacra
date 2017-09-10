@@ -39,5 +39,16 @@ class TestDownloadVideos(TestCase):
         expected_channels = ['some_channel1', 'some_other_channel2']
         self.post_job.assert_called_once_with(
             youtube_dl_flow_factory,
+            hierarchy=False,
+            factory_args=[expected_channels]
+        )
+
+    def test_download_videos_draws_hierarchy_of_download_yt_videos(self):
+        download_videos('/tmp/some_list_of_yt_channels.txt', hierarchy=True)
+
+        expected_channels = ['some_channel1', 'some_other_channel2']
+        self.post_job.assert_called_once_with(
+            youtube_dl_flow_factory,
+            hierarchy=True,
             factory_args=[expected_channels]
         )

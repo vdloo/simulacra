@@ -33,5 +33,6 @@ class TestYoutubeDLLatest(TestCase):
         parsed_arguments = self.parse_youtube_dl_arguments.return_value
         expected_channels_file = parsed_arguments.channels_file
         self.download_videos.assert_called_once_with(
-            channels_file=expected_channels_file
+            channels_file=expected_channels_file,
+            hierarchy=parsed_arguments.hierarchy
         )

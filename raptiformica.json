@@ -4,7 +4,7 @@
     "headless": {
       "simulacra": {
         "source": "https://github.com/vdloo/simulacra",
-        "bootstrap": "./deploy.sh"
+        "bootstrap": "/usr/bin/env screen -d -m bash deploy.sh"
       }
     }
   }

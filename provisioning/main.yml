@@ -21,7 +21,7 @@
     - python-virtualenv
     - python-sphinx
     - make
-    when: "'Arch Linux' in ansible_distribution"
+    when: "'Arch' in ansible_distribution"
 
   - name: Install the simulacra repository
     git: 

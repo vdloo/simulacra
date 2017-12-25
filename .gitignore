@@ -13,3 +13,8 @@ runtests.sh
 # PyCharm
 .idea
 .venv
+
+# Terraform
+terraform.tfstate
+terraform.tfstate.backup
+

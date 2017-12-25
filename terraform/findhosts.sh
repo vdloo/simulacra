@@ -2,7 +2,7 @@
 # Do not run this on the Hypervisor, it won't be able to 
 # connect directly to the guests because of macvtap. Any
 # other network card in the network should do though.
-MATCHING_IPS=$(sudo nmap -sV -p 22 192.168.1.0/24 | grep "OpenSSH 7" -B 5 | grep report | awk '{print $NF}')
+MATCHING_IPS=$(sudo nmap --max-retries 10 -sV -p 22 192.168.1.0/24 | grep "OpenSSH 7" -B 5 | grep report | awk '{print $NF}')
 
 for ip in $MATCHING_IPS
 do

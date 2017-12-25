@@ -11,6 +11,6 @@ do
     # contain other hosts with the same characteristics 
     # as well so be careful.
     printf "$ip "
-    ssh -oStrictHostKeyChecking=no root@$ip hostname
+    ssh -q -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no root@$ip hostname
 done
 

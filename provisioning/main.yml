@@ -69,7 +69,7 @@
       requirements=/usr/etc/simulacra/requirements/base.txt
       virtualenv=/usr/etc/simulacra/.venv
       virtualenv_python=python3
-    when: "'Arch Linux' in ansible_distribution"
+    when: "'Arch' in ansible_distribution"
 
   - name: Install jobrunner systemwide
     command: make install

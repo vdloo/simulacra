@@ -1,0 +1,9 @@
+[Service]
+ExecStart=
+<% case @operatingsystem
+when "Ubuntu" %>
+ExecStart=-/sbin/agetty --autologin <%= scope().call_function('hiera',['nonroot_username']) %> --noclear %I $TERM
+<% else %>
+ExecStart=-/usr/bin/agetty --autologin <%= scope().call_function('hiera',['nonroot_username']) %> --noclear %I $TERM
+<% end %>
+Type=simple

@@ -24,14 +24,14 @@ MAC_ADDRESSES=$(ssh root@$HYPERVISOR cat /etc/libvirt/qemu/grid*.xml | grep "mac
 # doing three passes to make sure we got them all
 echo "Flushing and warming ARP cache"
 ip -s -s neigh flush all
-for i in {1..3}; do
+for i in {1..5}; do
     nmap -sn 192.168.1.0/24 -n --send-ip -v0 -T5 --min-parallelism 100 --max-parallelism 256
 done
 
 # Get IP addresses of all VMs
 IP_ARRAY=()
 for mca in $MAC_ADDRESSES; do
-    IP_ARRAY+=($(arp -a -n | grep $mca | awk -F"[()]" '{print $2}'))
+    IP_ARRAY+=($(arp -a -n | grep -v incomplete | grep $mca | awk -F"[()]" '{print $2}'))
 done
 
 node_count=1

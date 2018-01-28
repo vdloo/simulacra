@@ -22,7 +22,8 @@ MAC_ADDRESSES=$(ssh root@$HYPERVISOR cat /etc/libvirt/qemu/grid*.xml | grep "mac
 
 # warm ARP cache, discover all hosts on the network
 # doing three passes to make sure we got them all
-echo "Warming ARP cache"
+echo "Flushing and warming ARP cache"
+ip -s -s neigh flush all
 for i in {1..3}; do
     nmap -sn 192.168.1.0/24 -n --send-ip -v0
 done

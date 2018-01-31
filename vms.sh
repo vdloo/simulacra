@@ -10,7 +10,14 @@ set -e
 
 HYPERVISOR="192.168.1.182"
 
-ssh root@$HYPERVISOR ./hypervisor.sh
+ssh root@$HYPERVISOR systemctl start libvirtd << EOF
+systemctl start libvirtd
+systemctl start firewalld
+virsh net-start default
+EOF
+sleep 3  # Giving the hypervisor some time to start up
+ssh root@$HYPERVISOR virsh pool-destroy default
+ssh root@$HYPERVISOR virsh pool-create pool.xml
 ssh root@$HYPERVISOR << EOF
 cd /root/code/projects/simulacra/terraform
 terraform destroy -force

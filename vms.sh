@@ -31,8 +31,10 @@ MAC_ADDRESSES=$(ssh root@$HYPERVISOR cat /etc/libvirt/qemu/grid*.xml | grep "mac
 # doing three passes to make sure we got them all
 echo "Flushing and warming ARP cache"
 ip -s -s neigh flush all
-for i in {1..5}; do
+for i in {1..6}; do
+    echo "Discovering hosts, sweep $i out of 6"
     nmap -sn 192.168.1.0/24 -n --send-ip -v0 -T5 --min-parallelism 100 --max-parallelism 256
+    sleep 10
 done
 
 # Get IP addresses of all VMs

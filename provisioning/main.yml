@@ -97,7 +97,7 @@
     # - brackets so pkill does not terminate its own process.
     # - grep out any matching processes running in dockers
     shell: >
-      ps aux | grep [j]obrunner_run.py | awk '{print $2}' |
+      ps aux | grep "/usr/etc/simulacra/bin/[j]obrunner_run" | awk '{print $2}' |
       xargs --no-run-if-empty -I {} sh -c "grep -q docker /proc/{}/cgroup ||
       kill {}" || /bin/true
 

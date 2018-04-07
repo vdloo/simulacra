@@ -1,0 +1,59 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# if vagrant-tun is not installed, install it and abort
+if !Vagrant.has_plugin?("vagrant-tun")
+  abort "Please first install the vagrant-tun plugin. Run 'vagrant plugin install vagrant-tun'"
+end
+
+VAGRANTFILE_API_VERSION = "2"
+
+require 'fileutils'
+PACKAGED_DIR = File.join(ENV['HOME'], '.raptiformica.d/var/packaged/vagrant')
+FileUtils.mkdir_p(PACKAGED_DIR)
+PACKAGED_CATALOG = File.join(PACKAGED_DIR, 'images/catalog.json')
+
+BASE_BOX_URL = 'http://cloud.terry.im/vagrant/archlinux-x86_64.box'
+BOX_URL = File.exists?(PACKAGED_CATALOG) ? PACKAGED_CATALOG : BASE_BOX_URL
+
+if ! File.exists?(PACKAGED_CATALOG)
+    # remove external virtualbox-guest-dkms in Archlinux boxes before running vagrant-vbguest
+    require_relative 'inline/remove-guest-dkms.rb'
+end
+
+Vagrant.configure('2') do |config|
+    case RUBY_PLATFORM
+    when /cygwin/, /mingw/
+            AUDIO_DRIVER = 'dsound'
+    when /darwin/
+            AUDIO_DRIVER = 'coreaudio'
+    else
+            AUDIO_DRIVER = 'alsa'
+    end
+    config.vm.provider "virtualbox" do |v|
+            v.customize ['modifyvm', :id, '--memory', '2048']
+            v.customize ['modifyvm', :id, '--cpus', '2']
+            v.customize ['modifyvm', :id, '--vram', '256']
+            v.customize ['modifyvm', :id, '--accelerate2dvideo', 'off']
+            v.customize ['modifyvm', :id, '--audio', AUDIO_DRIVER]
+            v.customize ['modifyvm', :id, '--audiocontroller', 'ac97']
+            v.gui = true
+    end
+
+    config.vm.synced_folder '.', '/vagrant', disabled: true
+    config.tun.enabled = true
+    config.ssh.forward_agent = true
+    VAGRANT_SCRIPT_DIR = File.dirname(__FILE__) << '/'
+
+    config.vm.box = File.exists?(PACKAGED_CATALOG) ? 'compute_workstation_vagrant' : 'archlinux_x86_64'
+    config.vm.box_url = BOX_URL
+    config.vm.provision "shell" do |s|
+        s.path  = VAGRANT_SCRIPT_DIR + 'deps/archlinux_deps.sh'
+    end
+    config.vm.provision "shell" do |s|
+        s.path  = VAGRANT_SCRIPT_DIR + 'provision.sh'
+    end
+    config.vm.network "private_network", type: "dhcp"
+    config.vm.synced_folder '.', '/vagrant', disabled: true
+end
+

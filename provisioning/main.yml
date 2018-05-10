@@ -26,7 +26,7 @@
   - name: Install the simulacra repository
     git: 
       repo=https://github.com/vdloo/simulacra.git
-      dest=/usr/etc/simulacra
+      dest=/root/.raptiformica.d/modules/simulacra
       version=master
       recursive=no
       depth=1
@@ -35,46 +35,46 @@
     register: simulacra_git
 
   - name: Make setup.sh executable
-    file: dest=/usr/etc/simulacra/setup.sh mode=0755
+    file: dest=/root/.raptiformica.d/modules/simulacra/setup.sh mode=0755
 
   - name: Download jobrunner dependencies
-    command: /usr/etc/simulacra/setup.sh
+    command: /root/.raptiformica.d/modules/simulacra/setup.sh
     args:
-      chdir: /usr/etc/simulacra/
+      chdir: /root/.raptiformica.d/modules/simulacra/
 
   - name: Install simulacra requirements in the virtualenv on Ubuntu
     pip:
-      requirements=/usr/etc/simulacra/requirements/base.txt
-      virtualenv=/usr/etc/simulacra/.venv
+      requirements=/root/.raptiformica.d/modules/simulacra/requirements/base.txt
+      virtualenv=/root/.raptiformica.d/modules/simulacra/.venv
       virtualenv_command=pyvenv-3.5
     when: ansible_distribution == 'Ubuntu'
 
   - name: Check if venv already exists
-    stat: path=/usr/etc/simulacra/.venv
+    stat: path=/root/.raptiformica.d/modules/simulacra/.venv
     register: manual_venv
 
   - name: Manually create python 3 venv on Debian
-    command: virtualenv -p python3 /usr/etc/simulacra/.venv
+    command: virtualenv -p python3 /root/.raptiformica.d/modules/simulacra/.venv
     when: ansible_distribution == 'Debian' and not manual_venv.stat.exists
 
   - name: Install simulacra requirements in the virtualenv on Debian
     pip:
-      requirements=/usr/etc/simulacra/requirements/base.txt
-      virtualenv=/usr/etc/simulacra/.venv
+      requirements=/root/.raptiformica.d/modules/simulacra/requirements/base.txt
+      virtualenv=/root/.raptiformica.d/modules/simulacra/.venv
       virtualenv_command=virtualenv
     when: ansible_distribution == 'Debian'
 
   - name: Install simulacra requirements in the virtualenv
     pip:
-      requirements=/usr/etc/simulacra/requirements/base.txt
-      virtualenv=/usr/etc/simulacra/.venv
+      requirements=/root/.raptiformica.d/modules/simulacra/requirements/base.txt
+      virtualenv=/root/.raptiformica.d/modules/simulacra/.venv
       virtualenv_python=python3
     when: "'Arch' in ansible_distribution"
 
   - name: Install jobrunner systemwide
     command: make install
     args:
-      chdir: /usr/etc/simulacra/
+      chdir: /root/.raptiformica.d/modules/simulacra/
 
   - name: Ensure consul config directory exists
     file: path=/etc/consul.d state=directory
@@ -97,7 +97,7 @@
     # - brackets so pkill does not terminate its own process.
     # - grep out any matching processes running in dockers
     shell: >
-      ps aux | grep "/usr/etc/simulacra/bin/[j]obrunner_run" | awk '{print $2}' |
+      ps aux | grep "/root/.raptiformica.d/modules/simulacra/bin/[j]obrunner_run" | awk '{print $2}' |
       xargs --no-run-if-empty -I {} sh -c "grep -q docker /proc/{}/cgroup ||
       kill {}" || /bin/true
 
@@ -106,9 +106,9 @@
     shell: >
       screen -ls | grep -v Dead | grep -q simulacra ||
       screen -S simulacra -d -m
-      bash -c 'PYTHONPATH=/usr/etc/simulacra/ 
-      /usr/etc/simulacra/.venv/bin/python 
-      /usr/etc/simulacra/bin/jobrunner_run.py'
+      bash -c 'PYTHONPATH=/root/.raptiformica.d/modules/simulacra/
+      /root/.raptiformica.d/modules/simulacra/.venv/bin/python
+      /root/.raptiformica.d/modules/simulacra/bin/jobrunner_run.py'
 
   - name: Wipe dead screens
     shell: screen -wipe || /bin/true

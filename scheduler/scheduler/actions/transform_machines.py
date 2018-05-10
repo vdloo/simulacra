@@ -44,8 +44,8 @@ def run_configuration_management(host):
         'root@{}'.format(host), '-p', '22',
     ]
     configuration_management_command_as_list = [
-        '/usr/etc/puppetfiles/provisioning/papply.sh',
-        '/usr/etc/puppetfiles/provisioning/manifests/headless.pp'
+        '/root/.raptiformica.d/modules/simulacra/puppetfiles/provisioning/papply.sh',
+        '/root/.raptiformica.d/modules/simulacra/puppetfiles/provisioning/manifests/headless.pp'
     ]
     process = Popen(
         ssh_command_as_list + configuration_management_command_as_list,

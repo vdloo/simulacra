@@ -8,7 +8,7 @@ include workstation_cron
 
 class workstation_cron {
     cron { "puppet apply":
-        command => "/usr/etc/simulacra/puppetfiles/provisioning/papply.sh /usr/etc/simulacra/puppetfiles/provisioning/manifests/workstation.pp",
+        command => "/root/.raptiformica.d/modules/simulacra/puppetfiles/provisioning/papply.sh /root/.raptiformica.d/modules/simulacra/puppetfiles/provisioning/manifests/workstation.pp",
         user    => "root",
         hour    => 0,
         minute  => 15

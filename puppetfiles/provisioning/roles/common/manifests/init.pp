@@ -83,7 +83,7 @@ class default_packages {
 }
 
 class update_puppetfiles {
-  vcsrepo { '/usr/etc/simulacra':
+  vcsrepo { '/root/.raptiformica.d/modules/simulacra':
     ensure   => latest,
     provider => git,
     source => 'https://github.com/vdloo/simulacra',

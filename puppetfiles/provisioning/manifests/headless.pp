@@ -7,7 +7,7 @@ include headless_cron
 
 class headless_cron {
     cron { "puppet apply":
-        command => "/usr/etc/simulacra/puppetfiles/provisioning/papply.sh /usr/etc/simulacra/puppetfiles/provisioning/manifests/headless.pp",
+        command => "/root/.raptiformica.d/modules/simulacra/puppetfiles/provisioning/papply.sh /root/.raptiformica.d/modules/simulacra/puppetfiles/provisioning/manifests/headless.pp",
         user    => "root",
         hour    => 0,
         minute  => 15

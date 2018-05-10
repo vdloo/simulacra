@@ -3,12 +3,12 @@ class debian {
     include debianlike
 }
 class keyring_packages {
-    $packages = [
-	'debian-keyring',
-	'debian-archive-keyring',
-    ]
-    package { $packages: 
-	ensure => 'installed',
-    }
+  $packages = [
+    'debian-keyring',
+    'debian-archive-keyring',
+  ]
+  package { $packages:
+    ensure => 'installed',
+  }
 }
 

@@ -1,3 +1,4 @@
+from unittest.mock import Mock
 from scheduler.cli import transform
 from tests.testcase import TestCase
 
@@ -7,6 +8,10 @@ class TestTransform(TestCase):
         self.parse_transform_arguments = self.set_up_patch(
             'scheduler.cli.parse_transform_arguments'
         )
+        self.args = Mock(
+            concurrent=5
+        )
+        self.parse_transform_arguments.return_value = self.args
         self.transform_machines = self.set_up_patch(
             'scheduler.cli.transform_machines'
         )
@@ -19,4 +24,6 @@ class TestTransform(TestCase):
     def test_parse_transform_arguments_transforms_machines(self):
         transform()
 
-        self.transform_machines.assert_called_once_with()
+        self.transform_machines.assert_called_once_with(
+            concurrent=5
+        )

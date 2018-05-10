@@ -76,3 +76,21 @@ class TestTransformMachines(TestCase):
         self.assertCountEqual(
             expected_calls, self.run_configuration_management.mock_calls
         )
+
+    def test_transform_machines_can_run_serially_if_specified(self):
+        pool = self.set_up_patch(
+            'scheduler.actions.transform_machines.ThreadPool'
+        )
+
+        transform_machines(concurrent=1)
+
+        pool.assert_called_one_with(processes=1)
+
+    def test_transform_machines_runs_concurrently_by_default(self):
+        pool = self.set_up_patch(
+            'scheduler.actions.transform_machines.ThreadPool'
+        )
+
+        transform_machines()
+
+        pool.assert_called_one_with(processes=5)

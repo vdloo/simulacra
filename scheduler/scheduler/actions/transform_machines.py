@@ -1,5 +1,6 @@
 from logging import getLogger
 from json import loads
+from multiprocessing.pool import ThreadPool
 from urllib.request import Request, urlopen
 from sys import stdout
 from subprocess import Popen, PIPE
@@ -64,13 +65,18 @@ def run_configuration_management(host):
         )
 
 
-def transform_machines():
+def transform_machines(concurrent=5):
     """
     Discover machines and run configuration management
     on them using appropriate settings based on the
     amount of resources available in the network.
+    :param int concurrent: How many machines to
+    transform at the same time.
     :return None
     """
     machines = list_machines()
-    for machine_host in [m['Address'] for m in machines]:
-        run_configuration_management(machine_host)
+    pool = ThreadPool(processes=concurrent)
+    pool.map(
+        run_configuration_management,
+        [m['Address'] for m in machines]
+    )

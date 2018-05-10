@@ -3,6 +3,8 @@ from argparse import ArgumentParser
 from scheduler.log import setup_logging
 from scheduler.actions.transform_machines import transform_machines
 
+DEFAULT_CONCURRENT = 5
+
 
 def parse_arguments(parser, args=None):
     """
@@ -31,6 +33,12 @@ def parse_transform_arguments():
                     'most appropriate instantiation of the '
                     'configured infrastructure'
     )
+    parser.add_argument(
+        '--concurrent',
+        help='How many machines to transform concurrently. '
+             'Defaults to {}'.format(DEFAULT_CONCURRENT),
+        type=int, default=DEFAULT_CONCURRENT
+    )
     return parse_arguments(parser)
 
 
@@ -40,5 +48,5 @@ def transform():
     instantiation of the configured infrastructure
     :return None:
     """
-    parse_transform_arguments()
-    transform_machines()
+    args = parse_transform_arguments()
+    transform_machines(concurrent=args.concurrent)

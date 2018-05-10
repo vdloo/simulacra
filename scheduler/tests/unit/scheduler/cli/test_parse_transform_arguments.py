@@ -1,4 +1,4 @@
-from unittest.mock import ANY
+from unittest.mock import ANY, call
 
 from scheduler.cli import parse_transform_arguments
 from tests.testcase import TestCase
@@ -18,6 +18,22 @@ class TestTransformArguments(TestCase):
 
         self.argument_parser.assert_called_once_with(
             description=ANY
+        )
+
+    def test_parse_transform_arguments_adds_correct_arguments(self):
+        parse_transform_arguments()
+
+        expected_calls = [
+            call(
+                '--concurrent',
+                help=ANY,
+                type=int,
+                default=5
+            )
+        ]
+        self.assertEqual(
+            expected_calls,
+            self.argument_parser.return_value.add_argument.mock_calls
         )
 
     def test_parse_transform_arguments_parses_arguments(self):

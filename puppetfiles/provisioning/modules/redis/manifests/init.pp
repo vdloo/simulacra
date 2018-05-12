@@ -13,17 +13,16 @@ class redis {
     if $redis_enabled {
         require install_redis
     }
-
-    service { 'redis':
+    $redis = $operatingsystem ? {
+        /^(Debian|Ubuntu)$/ => 'redis-server',
+        default => 'redis',
+    }
+    service { "$redis":
         ensure => $redis_enabled ? {true => 'running', default => 'stopped'}
     }
 }
 
 class install_redis {
-    $redis = $operatingsystem ? {
-        /^(Debian|Ubuntu)$/ => 'redis-server',
-        default => 'redis',
-    }
     if $facts['simulacra'] {
         $simulacra = $facts['simulacra']
     } else {
@@ -41,6 +40,10 @@ class install_redis {
     file { '/etc/redis/redis.conf':
         ensure => file,
         content => template('redis/redis.conf.erb')
+    }
+    $redis = $operatingsystem ? {
+        /^(Debian|Ubuntu)$/ => 'redis-server',
+        default => 'redis',
     }
     package { "$redis":
         ensure => 'installed',

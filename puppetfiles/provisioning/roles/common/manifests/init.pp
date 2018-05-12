@@ -5,6 +5,7 @@ class common {
   include vim
   include update_puppetfiles
   include locales
+  include redis
 }
 
 class os {

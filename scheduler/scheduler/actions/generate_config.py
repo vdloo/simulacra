@@ -2,6 +2,7 @@
 def generate_config_for_machine(machine):
     return {
         'simulacra': {
+            'ipv6_address': machine['Address'],
             'redis': machine['Node'] == 'retropie'
         }
     }

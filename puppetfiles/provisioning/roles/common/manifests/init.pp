@@ -6,6 +6,7 @@ class common {
   include update_puppetfiles
   include locales
   include redis
+  include mysql
 }
 
 class os {

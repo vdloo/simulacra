@@ -13,11 +13,7 @@ class mysql {
     if $mysql_enabled {
         require install_mysql
     }
-    $mysql = $operatingsystem ? {
-        /^(Debian|Ubuntu)$/ => 'mariadb-server',
-        default => 'mariadb',
-    }
-    service { "$mysql":
+    service { "mysql":
         ensure => $mysql_enabled ? {true => 'running', default => 'stopped'}
     }
 }
@@ -37,27 +33,27 @@ class install_mysql {
     file { '/etc/mysql/':
         ensure => 'directory',
     }
-    file { '/etc/mysql/mariadb.conf':
+    file { '/etc/mysql/mariadb.conf.d':
         ensure => 'directory',
     }
-    file { '/etc/mysql/mariadb.conf/90-simulacra.cnf':
+    file { '/etc/mysql/mariadb.conf.d/90-simulacra.cnf':
         ensure => file,
         content => template('mysql/mysql.conf.erb')
     }
     $mysql = $operatingsystem ? {
-        /^(Debian|Ubuntu)$/ => 'mysql-server',
-        default => 'mysql',
+        /^(Debian|Ubuntu)$/ => 'mariadb-server',
+        default => 'mariadb',
     }
     package { "$mysql":
         ensure => 'installed',
         alias => 'mysql',
     }
     exec { "ensure_database":
-        unless => "/usr/bin/mysql -usimulacra simulacra",
+        unless => "/usr/bin/mysql simulacra",
         # No password but the service only binds on the internal ipv6 address on the
         # encrypted overlay network, see mysql.conf.erb. Grant only allows fc00::/8
         # addresses to login, see https://en.wikipedia.org/wiki/Unique_local_address
-        command => "/usr/bin/mysql -uroot -e \"create database simulacra; grant all on simulacra.* to simulacra@'fc00:%';\"",
-        require => Service["mysqld"],
+        command => "/usr/bin/mysql -uroot -e \"create database simulacra;
+        create user simulacra@'fc:%'; grant all on simulacra.* to simulacra@'fc:%';\"",
     }
 }

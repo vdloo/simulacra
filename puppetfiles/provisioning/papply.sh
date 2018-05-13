@@ -7,8 +7,8 @@ else
 	base=$(puppet master --configprint modulepath);
 	modulepath="$base:$dirname/modules:$dirname/roles:$dirname/operating_systems" 
         if puppet --version | grep -q "^5\."; then
-	    puppet apply --no-stringify_facts --trusted_node_data --verbose --debug --modulepath="$modulepath" --hiera_config=$hieraconfig "$@"; 
-        else
 	    puppet apply --verbose --debug --modulepath="$modulepath" --hiera_config=$hieraconfig "$@"; 
+        else
+	    puppet apply --no-stringify_facts --trusted_node_data --verbose --debug --modulepath="$modulepath" --hiera_config=$hieraconfig "$@"; 
         fi
 fi

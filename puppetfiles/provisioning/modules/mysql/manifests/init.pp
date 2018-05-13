@@ -58,9 +58,8 @@ class install_mysql {
     exec { "ensure_database":
         unless => "/usr/bin/mysql simulacra",
         # No password but the service only binds on the internal ipv6 address on the
-        # encrypted overlay network, see mysql.conf.erb. Grant only allows fc00::/8
-        # addresses to login, see https://en.wikipedia.org/wiki/Unique_local_address
+        # encrypted overlay network, see mysql.conf.erb. 
         command => "/usr/bin/mysql -uroot -e \"create database simulacra;
-        create user simulacra@'fc:%'; grant all on simulacra.* to simulacra@'fc:%';\"",
+        create user simulacra@'%'; grant all on simulacra.* to simulacra@'%';\"",
     }
 }

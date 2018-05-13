@@ -36,7 +36,14 @@ class install_mysql {
     file { '/etc/mysql/mariadb.conf.d':
         ensure => 'directory',
     }
+    file { '/etc/mysql/conf.d':
+        ensure => 'directory',
+    }
     file { '/etc/mysql/mariadb.conf.d/90-simulacra.cnf':
+        ensure => file,
+        content => template('mysql/mysql.conf.erb')
+    }
+    file { '/etc/mysql/conf.d/mariadb.cnf':
         ensure => file,
         content => template('mysql/mysql.conf.erb')
     }

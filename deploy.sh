@@ -1,12 +1,14 @@
 #!/bin/bash
 set -e
 
+SCRIPT_DIR=$(cd "`dirname $0`" && pwd)
+
 # Install bootstrap dependencies on Debian-like machines
 if type apt-get > /dev/null 2>&1; then
     apt-get install python3 python-apt python3-dev libffi-dev libssl-dev -y
     apt-get purge ansible -y || /bin/true
     pip install ansible
-    ansible-playbook provisioning/main.yml --connection=local --connection=local -i '127.0.0.1,' -vvv
+    ansible-playbook "$SCRIPT_DIR/provisioning/main.yml" --connection=local --connection=local -i '127.0.0.1,' -vvv
 fi;
 
 # Install bootstrap dependencies on Archlinux machines
@@ -34,12 +36,12 @@ if type pacman > /dev/null 2>&1; then
     # ```
     if ps a | grep -q [c]om.android.phone; then
         pip3 install ansible
-        /usr/bin/python3 `which ansible-playbook` provisioning/main.yml \
+        /usr/bin/python3 `which ansible-playbook` "$SCRIPT_DIR/provisioning/main.yml" \
           --connection=local --connection=local -i '127.0.0.1,' \
           -e 'ansible_python_interpreter=/usr/bin/python3' -vvv
     else
         pacman -S python3 ansible --noconfirm --needed
-        ansible-playbook provisioning/main.yml \
+        ansible-playbook "$SCRIPT_DIR/provisioning/main.yml" \
           --connection=local --connection=local -i '127.0.0.1,' \
           -e 'ansible_python_interpreter=/usr/bin/python3' -vvv
     fi;

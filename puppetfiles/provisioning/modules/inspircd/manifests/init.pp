@@ -39,21 +39,21 @@ class install_inspircd {
 
     file { '/etc/inspircd/':
         ensure => 'directory',
-    }
+    } ->
     file { '/etc/inspircd/inspircd.conf':
         ensure => file,
         content => template('inspircd/inspircd.conf.erb')
-    }
+    } ->
     package { "inspircd":
         ensure => 'installed',
         alias => 'inspircd',
-    }
+    } ->
     exec { 'fix inspircd config subdir permissions':
         command => '/usr/bin/find /etc/inspircd -type d -exec chmod 770 {} \;',
-    }
+    } ->
     exec { 'fix inspircd config file permissions':
         command => '/usr/bin/find /etc/inspircd -type f -exec chmod 644 {} \;',
-    }
+    } ->
     exec { 'fix inspircd config dir ownership permissions':
         command => '/bin/chown -R irc:irc /etc/inspircd',
     }

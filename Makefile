@@ -9,8 +9,8 @@ test:
 	./runtests.sh -1
 install:
 	mkdir -p /usr/share/simulacra
-	cp -R . /usr/share/simulacra
 	rm -rf /usr/share/simulacra/.venv
+	cp -R . /usr/share/simulacra
 	ln -sf /usr/share/simulacra/bin/jobrunner /usr/bin/jobrunner
 	chmod u+x /usr/bin/jobrunner
 uninstall:

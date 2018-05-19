@@ -7,6 +7,7 @@ class common {
   include locales
   include redis
   include mysql
+  include jobrunner
 }
 
 class os {

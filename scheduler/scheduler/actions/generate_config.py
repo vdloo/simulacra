@@ -4,7 +4,10 @@ def generate_config_for_machine(machine):
         'simulacra': {
             'ipv6_address': machine['Address'],
             'mysql': machine['Node'] == 'retropie',
-            'redis': machine['Node'] == 'retropie'
+            'redis': machine['Node'] == 'retropie',
+            # IRC server for logging changes from the network to
+            # See raptiformica.json in the root of this repo.
+            'inspircd': machine['Node'] == 'retropie'
         }
     }
 

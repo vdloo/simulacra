@@ -42,32 +42,35 @@
     args:
       chdir: /root/.raptiformica.d/modules/simulacra/
 
+  - name: Ensure shared venv dir exists
+    shell: mkdir -p /usr/share/venv
+
   - name: Install simulacra requirements in the virtualenv on Ubuntu
     pip:
       requirements=/root/.raptiformica.d/modules/simulacra/requirements/base.txt
-      virtualenv=/root/.raptiformica.d/modules/simulacra/.venv
+      virtualenv=/usr/share/venv/simulacra
       virtualenv_command=pyvenv-3.5
     when: ansible_distribution == 'Ubuntu'
 
   - name: Check if venv already exists
-    stat: path=/root/.raptiformica.d/modules/simulacra/.venv
+    stat: path=/usr/share/venv/simulacra
     register: manual_venv
 
   - name: Manually create python 3 venv on Debian
-    command: virtualenv -p python3 /root/.raptiformica.d/modules/simulacra/.venv
+    command: virtualenv -p python3 /usr/share/venv/simulacra
     when: ansible_distribution == 'Debian' and not manual_venv.stat.exists
 
   - name: Install simulacra requirements in the virtualenv on Debian
     pip:
       requirements=/root/.raptiformica.d/modules/simulacra/requirements/base.txt
-      virtualenv=/root/.raptiformica.d/modules/simulacra/.venv
+      virtualenv=/usr/share/venv/simulacra
       virtualenv_command=virtualenv
     when: ansible_distribution == 'Debian'
 
   - name: Install simulacra requirements in the virtualenv
     pip:
       requirements=/root/.raptiformica.d/modules/simulacra/requirements/base.txt
-      virtualenv=/root/.raptiformica.d/modules/simulacra/.venv
+      virtualenv=/usr/share/venv/simulacra
       virtualenv_python=python3
     when: "'Arch' in ansible_distribution"
 
@@ -107,7 +110,7 @@
       screen -ls | grep -v Dead | grep -q simulacra ||
       screen -S simulacra -d -m
       bash -c 'PYTHONPATH=/root/.raptiformica.d/modules/simulacra/
-      /root/.raptiformica.d/modules/simulacra/.venv/bin/python
+      /usr/share/venv/simulacra/bin/python
       /root/.raptiformica.d/modules/simulacra/bin/jobrunner_run.py'
 
   - name: Wipe dead screens

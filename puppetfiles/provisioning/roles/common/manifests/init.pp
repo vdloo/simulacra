@@ -92,7 +92,6 @@ class update_puppetfiles {
     provider => git,
     source => 'https://github.com/vdloo/simulacra',
     revision => 'master',
-    force => true
   }
 }
 

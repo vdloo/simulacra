@@ -74,6 +74,11 @@
       virtualenv_python=python3
     when: "'Arch' in ansible_distribution"
 
+  - name: Symlink venv to simulacra checkout
+    shell: >
+      test -e /root/.raptiformica.d/modules/simulacra/.venv ||
+      ln -s /usr/share/venv/simulacra /root/.raptiformica.d/modules/simulacra/.venv
+
   - name: Install jobrunner systemwide
     command: make install
     args:

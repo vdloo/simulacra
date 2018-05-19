@@ -44,6 +44,14 @@ class install_inspircd {
         ensure => file,
         content => template('inspircd/inspircd.conf.erb')
     } ->
+    file { '/etc/inspircd/inspircd.motd':
+        ensure => file,
+        content => "Simulacra overlay mesh network IRC"
+    } ->
+    file { '/etc/inspircd/inspircd.rules':
+        ensure => file,
+        content => ''
+    } ->
     package { "inspircd":
         ensure => 'installed',
         alias => 'inspircd',

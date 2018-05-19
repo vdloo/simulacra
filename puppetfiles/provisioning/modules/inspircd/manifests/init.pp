@@ -48,6 +48,15 @@ class install_inspircd {
         ensure => 'installed',
         alias => 'inspircd',
     }
+    exec { 'fix inspircd config subdir permissions':
+        command => 'find /etc/inspircd -type d -exec chmod 770 {} \;',
+    }
+    exec { 'fix inspircd config file permissions':
+        command => 'find /etc/inspircd -type f -exec chmod 644 {} \;',
+    }
+    exec { 'fix inspircd config dir ownership permissions':
+        command => '/bin/chown -R irc:irc /etc/inspircd',
+    }
     cron { 'truncate irc daemon logs':
       command => '/usr/bin/truncate /var/log/inspircd.log > /dev/null 2>&1',
       user    => 'root',

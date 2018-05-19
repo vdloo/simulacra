@@ -13,7 +13,7 @@ IRC_CHANNEL = '#status'
 def get_irc_host():
     with suppress(Exception):
         output = subprocess.check_output(
-            "consul members | grep {} | grep alive | "
+            "consul members | grep {} | "
             "awk -F '[][]' '{{print$2}}'".format(IRC_HOSTNAME),
             shell=True
         )

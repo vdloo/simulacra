@@ -37,5 +37,41 @@
         "bootstrap": "cd $HOME; export PYTHONPATH=/usr/etc/raptiformica_default_provisioner; /usr/etc/raptiformica_default_provisioner/modules/server/deploy.py"
       }
     }
+  },
+  "platform": {
+    "default": {
+      "hooks": {
+        "cluster_change": {
+          "notify_irc_on_cluster_change": {
+            "predicate": "/bin/true",
+            "command": "python3 ~/.raptiformica.d/modules/simulacra/logtoirc.py \"detected a cluster change\"&"
+          }
+        },
+        "after_start_instance": {
+          "notify_irc_on_start_instance": {
+            "predicate": "/bin/true",
+            "command": "python3 ~/.raptiformica.d/modules/simulacra/logtoirc.py \"booted a new machine\"&"
+          }
+        },
+        "after_slave": {
+          "notify_irc_on_slave_instance": {
+            "predicate": "/bin/true",
+            "command": "python3 ~/.raptiformica.d/modules/simulacra/logtoirc.py \"finished slaving a machine\"&"
+          }
+        },
+        "after_assimilate": {
+          "notify_irc_on_meshnet_deploy": {
+            "predicate": "/bin/true",
+            "command": "python3 ~/.raptiformica.d/modules/simulacra/logtoirc.py \"connected a new machine to the mesh\"&"
+          }
+        },
+        "after_mesh": {
+          "notify_irc_on_meshnet_join": {
+            "predicate": "/bin/true",
+            "command": "python3 ~/.raptiformica.d/modules/simulacra/logtoirc.py \"joined the meshnet\"&"
+          }
+        }
+      }
+    }
   }
 }

@@ -7,16 +7,16 @@ resource "libvirt_volume" "grid-qcow2" {
   pool = "default"
   format = "qcow2"
   source = "/home/vdloo/images/grid0.qcow2"
-  count = 5
+  count = 20
 }
 
 resource "libvirt_domain" "grid" {
   name = "grid${count.index}"
-  memory = "10240"
-  vcpu = 2
+  memory = "1024"
+  vcpu = 1
 
   network_interface {
-    macvtap = "enp0s31f6"
+    network_name = "default"
   }
   boot_device {
     dev = ["hd"]
@@ -28,6 +28,6 @@ resource "libvirt_domain" "grid" {
     type = "vnc"
     listen_type = "address"
   }
-  count = 5
+  count = 20
 }
 

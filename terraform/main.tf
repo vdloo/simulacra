@@ -30,4 +30,3 @@ resource "libvirt_domain" "grid" {
   }
   count = 10
 }
-

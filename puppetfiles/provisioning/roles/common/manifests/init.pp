@@ -79,6 +79,7 @@ class default_packages {
     'git',
     'screen',
     'xclip',
+    'strace',
     'feh',
   ]
   package { $packages:

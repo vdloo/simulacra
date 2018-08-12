@@ -1,0 +1,9 @@
+#!/bin/bash
+systemctl start libvirtd
+systemctl start firewalld
+sleep 120
+virsh net-start default
+virsh pool-destroy default || /bin/true
+virsh pool-create pool.xml
+sleep 5
+virsh list --all | grep grid | grep 'shut off' | awk '{print$2}' | xargs -I {} virsh start {}

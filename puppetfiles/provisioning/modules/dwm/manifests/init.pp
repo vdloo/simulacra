@@ -139,6 +139,14 @@ class dwm_dependencies {
 	ensure => 'installed',
 	alias => 'xsetroot',
     }
+    $xrandr = $operatingsystem ? {
+	/^(Debian|Ubuntu)$/ => 'x11-xserver-utils',
+	default => 'xorg-xrandr',
+    }
+    package { "$xrandr":
+	ensure => 'installed',
+	alias => 'xrandr',
+    }
     package { "dmenu":
 	ensure => 'installed',
     }

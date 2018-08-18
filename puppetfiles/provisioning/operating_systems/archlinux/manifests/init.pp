@@ -10,5 +10,9 @@ class update_pacman {
 	package { "youtube-dl":
 	  ensure => 'installed',
 	  alias => 'youtube-dl',
+	} ->
+	package { "screenfetch":
+	  ensure => 'installed',
+	  alias => 'screenfetch',
 	}
 }

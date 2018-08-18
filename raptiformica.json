@@ -12,7 +12,27 @@
         "clean_up_instance_command": "cd vagrantfiles/workstation && vagrant destroy -f",
         "package": "cd vagrantfiles/workstation && sh package.sh"
       },
+      "workstation_puppet": {
+        "available": "vagrant -v",
+        "source": "https://github.com/vdloo/simulacra",
+        "start_instance": "cd vagrantfiles/workstation && vagrant up",
+        "get_hostname": "cd vagrantfiles/workstation && nohup vagrant ssh -c 'ip addr show' 2>&1 | grep 'inet ' | tail -n 1 | awk '{print$2}' | cut -d '/' -f1",
+        "get_port": "echo 22",
+        "detect_stale_instance": "cd vagrantfiles/workstation && vagrant status | grep running",
+        "clean_up_instance_command": "cd vagrantfiles/workstation && vagrant destroy -f",
+        "package": "cd vagrantfiles/workstation && sh package.sh"
+      },
       "htpc": {
+        "available": "vagrant -v",
+        "source": "https://github.com/vdloo/simulacra",
+        "start_instance": "cd vagrantfiles/workstation && vagrant up",
+        "get_hostname": "cd vagrantfiles/workstation && nohup vagrant ssh -c 'ip addr show' 2>&1 | grep 'inet ' | tail -n 1 | awk '{print$2}' | cut -d '/' -f1",
+        "get_port": "echo 22",
+        "detect_stale_instance": "cd vagrantfiles/workstation && vagrant status | grep running",
+        "clean_up_instance_command": "cd vagrantfiles/workstation && vagrant destroy -f",
+        "package": "cd vagrantfiles/workstation && sh package.sh"
+      },
+      "htpc_puppet": {
         "available": "vagrant -v",
         "source": "https://github.com/vdloo/simulacra",
         "start_instance": "cd vagrantfiles/workstation && vagrant up",
@@ -31,10 +51,30 @@
         "bootstrap": "cd $HOME; export PYTHONPATH=/usr/etc/raptiformica_default_provisioner; /usr/etc/raptiformica_default_provisioner/modules/server/deploy.py"
       }
     },
+    "workstation_puppet": {
+      "raptiformica_default_provisioner": {
+        "source": "file:///usr/etc/raptiformica",
+        "bootstrap": "cd $HOME; export PYTHONPATH=/usr/etc/raptiformica_default_provisioner; /usr/etc/raptiformica_default_provisioner/modules/server/deploy.py"
+      },
+      "puppet_config_mgmt": {
+        "source": "https://github.com/vdloo/simulacra",
+        "bootstrap": "cd puppetfiles/provisioning && ./papply.sh manifests/workstation.pp"
+      }
+    },
     "htpc": {
       "raptiformica_default_provisioner": {
         "source": "file:///usr/etc/raptiformica",
         "bootstrap": "cd $HOME; export PYTHONPATH=/usr/etc/raptiformica_default_provisioner; /usr/etc/raptiformica_default_provisioner/modules/server/deploy.py"
+      }
+    },
+    "htpc_puppet": {
+      "raptiformica_default_provisioner": {
+        "source": "file:///usr/etc/raptiformica",
+        "bootstrap": "cd $HOME; export PYTHONPATH=/usr/etc/raptiformica_default_provisioner; /usr/etc/raptiformica_default_provisioner/modules/server/deploy.py"
+      },
+      "puppet_config_mgmt": {
+        "source": "https://github.com/vdloo/simulacra",
+        "bootstrap": "cd puppetfiles/provisioning && ./papply.sh manifests/htpc.pp"
       }
     }
   },

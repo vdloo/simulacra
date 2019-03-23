@@ -1,0 +1,11 @@
+<pool type='dir'>
+  <name>devstack</name>
+  <target>
+    <path>/home/libvirt/images</path>
+    <permissions>
+      <mode>0755</mode>
+      <owner>0</owner>
+      <group>0</group>
+    </permissions>
+  </target>
+</pool>

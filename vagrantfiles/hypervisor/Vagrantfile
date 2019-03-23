@@ -1,0 +1,24 @@
+Vagrant.configure("2") do |config|
+  config.vm.hostname = `echo "$(hostname)-L1"`.chomp
+  config.vm.box = "generic/ubuntu1804"
+  config.vm.provider :libvirt do |domain|
+    domain.storage_pool_name = 'devstack'
+    domain.storage_pool_path = '/home/libvirt/images'
+    domain.memory = `echo "$(($(free -m | grep Mem | awk '{print$2}')-1000))"`.chomp
+    domain.cpus = `awk "/^processor/ {++n} END {print n}" /proc/cpuinfo`.chomp
+  end
+  config.vm.network :public_network, 
+    :dev => `ip addr | grep '^2:' | awk '{print$2}' | cut -d':' -f1`.chomp,
+    :mode => "bridge",
+    :guest_ipv6 => false
+  config.vm.provider :libvirt do |libvirt|
+    libvirt.driver = "kvm"
+  end
+  config.vm.synced_folder "salt/roots/", "/srv/salt/"
+  config.vm.provision :salt do |salt|
+    salt.masterless = true
+    salt.minion_config = "salt/minion"
+    salt.run_highstate = true
+    salt.verbose = true
+  end
+end

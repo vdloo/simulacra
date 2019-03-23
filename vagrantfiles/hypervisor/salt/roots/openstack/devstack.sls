@@ -3,6 +3,10 @@ https://github.com/openstack-dev/devstack:
     - target: /opt/devstack
     - branch: stable/rocky
 
+net.ipv6.conf.all.disable_ipv6:
+  sysctl.present:
+    - value: 0
+
 /opt/devstack/tools/create-stack-user.sh:
   cmd.run
 

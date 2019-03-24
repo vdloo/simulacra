@@ -27,6 +27,10 @@ net.ipv6.conf.all.disable_ipv6:
 /bin/chown stack:stack /opt/devstack:
   cmd.run
 
+/opt/devstack/tools/install_pip.sh:
+  cmd.run:
+    - runas: stack
+
 /opt/devstack/stack.sh > /tmp/devstackbootstrap.log 2>&1:
   cmd.run:
     - runas: stack

@@ -1,4 +1,4 @@
-https://github.com/openstack-dev/devstack:
+https://github.com/vdloo/devstack:
   git.latest:
     - target: /opt/devstack
     - branch: stable/rocky

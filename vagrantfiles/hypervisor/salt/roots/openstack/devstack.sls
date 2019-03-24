@@ -19,10 +19,6 @@ net.ipv6.conf.all.disable_ipv6:
     - user: stack
     - group: stack
     - mode: 644
-    - template: jinja
-    - defaults:
-        custom_var: "default value"
-        other_var: 123
 
 /bin/chown stack:stack /opt/devstack:
   cmd.run

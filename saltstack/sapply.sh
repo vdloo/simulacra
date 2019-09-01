@@ -13,3 +13,5 @@ cat <<EOF > /etc/salt/minion
 file_client: local
 EOF
 
+systemctl restart salt-minion
+

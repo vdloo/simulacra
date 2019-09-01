@@ -7,3 +7,9 @@ if test ! -e bootstrap_salt.sh; then
 else
     echo "SaltStack already installed"
 fi
+
+# Masterless Salt https://docs.saltstack.com/en/latest/topics/tutorials/quickstart.html
+cat <<EOF > /etc/salt/minion
+file_client: local
+EOF
+

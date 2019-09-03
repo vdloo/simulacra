@@ -5,8 +5,6 @@ echo -e 'Server = http://mirror.nl.leaseweb.net/archlinux/$repo/os/$arch\nServer
 # Trust all signatures, currently broken out of the box. TODO: rm later
 grep -q 'SigLevel    = Never' /etc/pacman.conf || sed -i -e 's/SigLevel    = Required DatabaseOptional/SigLevel    = Never/g' /etc/pacman.conf
 
-echo "Refreshing keys"
-pacman-key --refresh-keys
 echo "Re-installing keyring"
 pacman -Sy archlinux-keyring --noconfirm
 pacman -Sy --noconfirm

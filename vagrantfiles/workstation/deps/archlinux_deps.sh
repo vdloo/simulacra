@@ -3,7 +3,7 @@
 echo -e 'Server = http://mirror.nl.leaseweb.net/archlinux/$repo/os/$arch\nServer = http://ftp.snt.utwente.nl/pub/os/linux/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
 
 # Trust all signatures, currently broken out of the box. TODO: rm later
-grep -q 'DatabaseOptional' /etc/pacman.conf || sed -i -e 's/SigLevel    = Required DatabaseOptional/SigLevel    = Never/g' /etc/pacman.conf
+grep -q 'SigLevel    = Never' /etc/pacman.conf || sed -i -e 's/SigLevel    = Required DatabaseOptional/SigLevel    = Never/g' /etc/pacman.conf
 
 echo "Refreshing keys"
 pacman-key --refresh-keys

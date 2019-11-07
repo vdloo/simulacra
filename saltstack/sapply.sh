@@ -22,4 +22,4 @@ for saltdir in salt pillar; do
 done
 
 echo "Applying state"
-salt-call --local state.apply -l debug
+salt-call --local state.apply -l debug --force-color

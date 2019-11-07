@@ -15,3 +15,11 @@ EOF
 
 systemctl restart salt-minion
 
+for saltdir in salt pillar; do
+    echo "Installing $saltdir files"
+    rm -rf /srv/$saltdir
+    cp -R $saltdir /srv/$saltdir
+done
+
+echo "Applying state"
+salt-call --local state.apply -l debug

@@ -1,5 +1,6 @@
 #!/bin/bash
 # https://docs.saltstack.com/en/latest/topics/tutorials/quickstart.html
+WORKING_DIR=`pwd`
 if test ! -e bootstrap_salt.sh; then
     echo "Installing SaltStack"
     curl -L https://bootstrap.saltstack.com -o bootstrap_salt.sh
@@ -8,9 +9,20 @@ else
     echo "SaltStack already installed"
 fi
 
+echo "Install salt formulas"
+rm -rf formulas
+mkdir -p /srv/formulas
+cd /srv/formulas
+git clone https://github.com/saltstack-formulas/vim-formula
+cd $WORKING_DIR
+
 # Masterless Salt https://docs.saltstack.com/en/latest/topics/tutorials/quickstart.html
 cat <<EOF > /etc/salt/minion
 file_client: local
+file_roots:
+  base:
+    - /srv/salt
+    - /srv/formulas/*
 EOF
 
 systemctl restart salt-minion

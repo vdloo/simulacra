@@ -9,6 +9,11 @@ else
     echo "SaltStack already installed"
 fi
 
+# Writing salt grains
+cat <<EOF > /etc/salt/grains
+role: workstation
+EOF
+
 echo "Install salt formulas"
 rm -rf formulas
 mkdir -p /srv/formulas

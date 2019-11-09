@@ -4,7 +4,8 @@ install not root user:
   user.present:
     - name: notroot
     - fullname: Not Root
-    - password: notroot
+    # notroot
+    - password: $6$Fa4ELMtlTwOvhG50$JNbroT9R1Bj0QvER7PYw3Zxn2pnuA/uvj7obVJx0RXauLytV0xecEawUxKRhRaiIfjDWp1dn9tpCKoVd2OEBy/
 
 ensure git email is configured:
   git.config_set:

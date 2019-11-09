@@ -19,5 +19,5 @@ install locale:
 generate locales:
   cmd.run:
     - name: locale-gen
-    - listen:
-      - file: /etc/locale.gen
+    - onchanges:
+      - file: install locale.gen

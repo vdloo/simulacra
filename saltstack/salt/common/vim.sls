@@ -35,6 +35,8 @@ install vim plugins:
   cmd.run:
     - name: vim +PluginInstall +qall &>/dev/null
     - runas: notroot
+    - onchanges:
+      - file: install vimrc
 
 create vim colors directory:
   file.directory:

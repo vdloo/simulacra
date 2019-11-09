@@ -34,4 +34,4 @@ for saltdir in salt pillar; do
 done
 
 echo "Applying state"
-salt-call --local state.apply -l debug --force-color
+salt-call --local state.apply -l error --state-output=terse --force-color

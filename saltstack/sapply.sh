@@ -1,4 +1,15 @@
 #!/bin/bash
+set -e
+
+ROLE=common  # in case no -r <role> is specified
+while getopts "r:" opt; do
+    case $opt in
+        r) ROLE=$OPTARG;;
+    esac
+done
+
+echo "Configuring machine as role $ROLE"
+
 # https://docs.saltstack.com/en/latest/topics/tutorials/quickstart.html
 WORKING_DIR=`pwd`
 if test ! -e bootstrap_salt.sh; then
@@ -11,7 +22,7 @@ fi
 
 # Writing salt grains
 cat <<EOF > /etc/salt/grains
-role: workstation
+role: $ROLE
 EOF
 
 echo "Install salt formulas"

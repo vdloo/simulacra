@@ -13,7 +13,7 @@ echo "Install salt formulas"
 rm -rf formulas
 mkdir -p /srv/formulas
 cd /srv/formulas
-git clone https://github.com/saltstack-formulas/vim-formula
+# Currently no salt formulas in use
 cd $WORKING_DIR
 
 # Masterless Salt https://docs.saltstack.com/en/latest/topics/tutorials/quickstart.html

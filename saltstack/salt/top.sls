@@ -1,5 +1,3 @@
 base:
   '*':
     - common
-    # formulas
-    - vim

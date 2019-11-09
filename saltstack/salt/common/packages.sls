@@ -21,6 +21,7 @@ install common packages:
       - xclip
       - strace
       - feh
+      - sudo
     - refresh: true
 
 # SaltStack can't handle virtual packages or package groups

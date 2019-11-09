@@ -6,6 +6,7 @@ install common packages:
       - python-virtualenv
       - unzip
       - curl
+      - wget
       - nmap
       - automake
       - make

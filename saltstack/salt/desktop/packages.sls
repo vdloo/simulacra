@@ -20,4 +20,3 @@ install desktop packages:
       - xorg-xinit
       - xorg-xsetroot
       - xorg-xrandr
-

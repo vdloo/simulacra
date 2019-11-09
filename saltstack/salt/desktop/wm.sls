@@ -1,3 +1,5 @@
+---
+
 install window manager packages:
   pkg.installed:
     - pkgs:
@@ -36,13 +38,13 @@ install dwm:
 install xdefaults:
   file.managed:
     - name: /home/notroot/.Xdefaults
-    - source: salt://common/files/home/notroot/.Xdefaults
+    - source: salt://desktop/files/home/notroot/.Xdefaults
     - user: notroot
     - group: notroot
 
 install xinitrc:
   file.managed:
     - name: /home/notroot/.xinitrc
-    - source: salt://common/files/home/notroot/.xinitrc
+    - source: salt://desktop/files/home/notroot/.xinitrc
     - user: notroot
     - group: notroot

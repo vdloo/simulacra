@@ -4,9 +4,9 @@ install terminal packages:
   pkg.installed:
     - pkgs:
       - terminator
-	  # Terminator doesn't like the terminus system font for some reason
-	  # We need to have ttf-dejavu installed to get proper rendering (in Virtualbox only?)
-	  - ttf-dejavu
+      # Terminator doesn't like the terminus system font for some reason
+      # We need to have ttf-dejavu installed to get proper rendering (in Virtualbox only?)
+      - ttf-dejavu
 
 create config directory:
   file.directory:

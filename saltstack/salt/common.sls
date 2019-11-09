@@ -1,9 +1,22 @@
 install common packages:
   pkg.installed:
     - pkgs:
+      - base-devel
+      - python-virtualenv
+      - unzip
       - curl
-      - wget
+      - nmap
+      - automake
+      - make
+      - htop
+      - iftop
+      - sysstat
+      - task
+      - irssi
+      - ctags
       - git
       - screen
-      - htop
+      - xclip
+      - strace
+      - feh
     - refresh: true

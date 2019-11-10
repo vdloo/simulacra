@@ -12,10 +12,7 @@ pacman-key --populate archlinux
 
 pacman -Sy --noconfirm
 
-pacman -S ruby python3 python2 rsync git icu puppet acl libmariadbclient nodejs base-devel iputils wget unzip screen xf86-video-vesa --noconfirm --needed
-puppet module install puppetlabs-vcsrepo
-puppet module install maestrodev-wget
-puppet module install saz-sudo --version=4.2.0
+pacman -S ruby python3 python2 rsync git icu acl libmariadbclient nodejs base-devel iputils wget unzip screen xf86-video-vesa --noconfirm --needed
 
 # Make sure the kernel is not upgraded on 'pacman -Syu' because otherwise we'd need to reboot
 # yet again before docker will work inside the virtualized guest due to the right veth kernel module 

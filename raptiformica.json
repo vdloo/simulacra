@@ -22,6 +22,16 @@
         "clean_up_instance_command": "cd vagrantfiles/workstation && vagrant destroy -f",
         "package": "cd vagrantfiles/workstation && sh package.sh"
       },
+      "workstation_salt": {
+        "available": "vagrant -v",
+        "source": "https://github.com/vdloo/simulacra",
+        "start_instance": "git remote add remote https://github.com/vdloo/simulacra || /bin/true; git fetch remote || /bin/true; git checkout remote/rewrite-workstation-configmgt-in-salt || /bin/true; git reset --hard remote/rewrite-workstation-configmgt-in-salt || /bin/true; cd vagrantfiles/workstation && vagrant up",
+        "get_hostname": "cd vagrantfiles/workstation && nohup vagrant ssh -c 'ip addr show' 2>&1 | grep 'inet ' | tail -n 1 | awk '{print$2}' | cut -d '/' -f1",
+        "get_port": "echo 22",
+        "detect_stale_instance": "cd vagrantfiles/workstation && vagrant status | grep running",
+        "clean_up_instance_command": "cd vagrantfiles/workstation && vagrant destroy -f",
+        "package": "cd vagrantfiles/workstation && sh package.sh"
+      },
       "htpc": {
         "available": "vagrant -v",
         "source": "https://github.com/vdloo/simulacra",
@@ -36,6 +46,16 @@
         "available": "vagrant -v",
         "source": "https://github.com/vdloo/simulacra",
         "start_instance": "cd vagrantfiles/workstation && vagrant up",
+        "get_hostname": "cd vagrantfiles/workstation && nohup vagrant ssh -c 'ip addr show' 2>&1 | grep 'inet ' | tail -n 1 | awk '{print$2}' | cut -d '/' -f1",
+        "get_port": "echo 22",
+        "detect_stale_instance": "cd vagrantfiles/workstation && vagrant status | grep running",
+        "clean_up_instance_command": "cd vagrantfiles/workstation && vagrant destroy -f",
+        "package": "cd vagrantfiles/workstation && sh package.sh"
+      },
+      "htpc_salt": {
+        "available": "vagrant -v",
+        "source": "https://github.com/vdloo/simulacra",
+        "start_instance": "git remote add remote https://github.com/vdloo/simulacra || /bin/true; git fetch remote || /bin/true; git checkout remote/rewrite-workstation-configmgt-in-salt || /bin/true; git reset --hard remote/rewrite-workstation-configmgt-in-salt || /bin/true; cd vagrantfiles/workstation && vagrant up",
         "get_hostname": "cd vagrantfiles/workstation && nohup vagrant ssh -c 'ip addr show' 2>&1 | grep 'inet ' | tail -n 1 | awk '{print$2}' | cut -d '/' -f1",
         "get_port": "echo 22",
         "detect_stale_instance": "cd vagrantfiles/workstation && vagrant status | grep running",
@@ -59,6 +79,18 @@
       "puppet_config_mgmt": {
         "source": "https://github.com/vdloo/simulacra",
         "bootstrap": "cd puppetfiles/provisioning && ./papply.sh manifests/workstation.pp"
+      }
+    },
+    "workstation_salt": {
+      "salt_config_mgmt": {
+        "source": "https://github.com/vdloo/simulacra",
+        "bootstrap": "git remote add remote https://github.com/vdloo/simulacra || /bin/true; git fetch remote || /bin/true; git checkout remote/rewrite-workstation-configmgt-in-salt || /bin/true; git reset --hard remote/rewrite-workstation-configmgt-in-salt || /bin/true; cd saltstack && ./sapply.sh -r workstation"
+      }
+    },
+    "htpc_salt": {
+      "salt_config_mgmt": {
+        "source": "https://github.com/vdloo/simulacra",
+        "bootstrap": "git remote add remote https://github.com/vdloo/simulacra || /bin/true; git fetch remote || /bin/true; git checkout remote/rewrite-workstation-configmgt-in-salt || /bin/true; git reset --hard remote/rewrite-workstation-configmgt-in-salt || /bin/true; cd saltstack && ./sapply.sh -r htpc"
       }
     },
     "htpc": {

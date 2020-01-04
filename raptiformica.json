@@ -84,13 +84,13 @@
     "workstation_salt": {
       "salt_config_mgmt": {
         "source": "https://github.com/vdloo/simulacra",
-        "bootstrap": "git remote add remote https://github.com/vdloo/simulacra || /bin/true; cd saltstack && ./sapply.sh -r workstation"
+        "bootstrap": "git remote add remote https://github.com/vdloo/simulacra || /bin/true; cd saltstack && ./sapply.sh -r workstation &> sout.txt"
       }
     },
     "htpc_salt": {
       "salt_config_mgmt": {
         "source": "https://github.com/vdloo/simulacra",
-        "bootstrap": "git remote add remote https://github.com/vdloo/simulacra || /bin/true; cd saltstack && ./sapply.sh -r htpc"
+        "bootstrap": "git remote add remote https://github.com/vdloo/simulacra || /bin/true; cd saltstack && ./sapply.sh -r htpc &> sout.txt"
       }
     },
     "htpc": {

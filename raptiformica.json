@@ -65,7 +65,17 @@
     }
   },
   "server": {
+    "headless": {
+      "simulacra": {
+        "source": "https://github.com/vdloo/simulacra",
+        "bootstrap": "/usr/bin/env screen -d -m bash deploy.sh"
+      }
+    },
     "workstation": {
+      "simulacra": {
+        "source": "https://github.com/vdloo/simulacra",
+        "bootstrap": "/usr/bin/env screen -d -m bash deploy.sh"
+      },
       "raptiformica_default_provisioner": {
         "source": "file:///usr/etc/raptiformica",
         "bootstrap": "cd $HOME; export PYTHONPATH=/usr/etc/raptiformica_default_provisioner; /usr/etc/raptiformica_default_provisioner/modules/server/deploy.py"
@@ -94,6 +104,10 @@
       }
     },
     "htpc": {
+      "simulacra": {
+        "source": "https://github.com/vdloo/simulacra",
+        "bootstrap": "/usr/bin/env screen -d -m bash deploy.sh"
+      },
       "raptiformica_default_provisioner": {
         "source": "file:///usr/etc/raptiformica",
         "bootstrap": "cd $HOME; export PYTHONPATH=/usr/etc/raptiformica_default_provisioner; /usr/etc/raptiformica_default_provisioner/modules/server/deploy.py"

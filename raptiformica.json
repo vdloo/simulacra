@@ -69,20 +69,12 @@
       "simulacra": {
         "source": "https://github.com/vdloo/simulacra",
         "bootstrap": "/usr/bin/env screen -d -m bash deploy.sh"
-      },
-      "puppetfiles": {
-        "bootstrap": "cd puppetfiles/provisioning && ./papply.sh manifests/headless.pp",
-        "source": "https://github.com/vdloo/simulacra"
       }
     },
     "workstation": {
       "simulacra": {
         "source": "https://github.com/vdloo/simulacra",
         "bootstrap": "/usr/bin/env screen -d -m bash deploy.sh"
-      },
-      "puppetfiles": {
-        "bootstrap": "cd puppetfiles/provisioning && ./papply.sh manifests/workstation.pp",
-        "source": "https://github.com/vdloo/simulacra"
       },
       "raptiformica_default_provisioner": {
         "source": "file:///usr/etc/raptiformica",
@@ -115,10 +107,6 @@
       "simulacra": {
         "source": "https://github.com/vdloo/simulacra",
         "bootstrap": "/usr/bin/env screen -d -m bash deploy.sh"
-      },
-      "puppetfiles": {
-        "bootstrap": "cd puppetfiles/provisioning && ./papply.sh manifests/htpc.pp",
-        "source": "https://github.com/vdloo/simulacra"
       },
       "raptiformica_default_provisioner": {
         "source": "file:///usr/etc/raptiformica",

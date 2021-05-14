@@ -2,7 +2,7 @@
 
 # SaltStack can't handle virtual packages or package groups
 # See https://github.com/saltstack/salt/issues/47092
-{% set xorg_packages = salt['cmd.shell']('pacman -Qgq xorg').split('\n') %}
+{% set xorg_packages = salt['cmd.shell']('pacman -S xorg -g | awk \'{print$2}\'').split('\n') %}
 {% for xorg_package in xorg_packages %}
 install {{ xorg_package }} package:
   pkg.installed:
